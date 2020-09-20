@@ -8,7 +8,8 @@ class MainContainer extends Component {
   state = {
     loaded: false,
     stocks: [],
-    portfolio: []
+    portfolio: [],
+    filter: ""
   }
 
   componentDidMount() {
@@ -38,16 +39,40 @@ class MainContainer extends Component {
     this.setState({portfolio: newArray})
   }
 
+  filterHandler = (e) => {
+    this.setState({filter: e.target.value})
+  }
+
+  sortBy = (value) => {
+    if (value === "Alphabetically") {    
+      let names = this.state.stocks.map(stock => stock.name)
+      let sortedArray = names.sort().map(name => {
+        return this.state.stocks.find(stock => {return stock.name === name})
+        })
+      console.log(sortedArray)
+      this.setState({stocks: sortedArray})
+    } else {      
+      let prices = this.state.stocks.map(stock => stock.price)
+      let sortedArray = prices.sort((a, b) => {
+        return a - b
+      }).map(price => {
+        return this.state.stocks.find(stock => {return stock.price === price})
+        })
+      console.log(sortedArray)
+      this.setState({stocks: sortedArray})
+    }
+  }
+
   render() {
     return this.state.loaded
       ?
       <div>
-        <SearchBar/>
+        <SearchBar filterHandler={this.filterHandler}  sort={this.sortBy}/>
 
           <div className="row">
             <div className="col-8">
 
-              <StockContainer stocks={this.state.stocks} clickListener={this.stockClickListener} />
+              <StockContainer stocks={this.state.stocks} clickListener={this.stockClickListener} filter={this.state.filter} />
 
             </div>
             <div className="col-4">
