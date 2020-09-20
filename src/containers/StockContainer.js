@@ -3,15 +3,12 @@ import Stock from '../components/Stock'
 
 class StockContainer extends React.Component {
 
-  state={
-    data:[]
-  }
-  
   getStocks=()=>{
-    return this.state.data.map(el=><Stock key={el.id} el={el}/>)
+    return this.props.data.map(el=><Stock key={el.id} el={el} togFav={this.props.getFav}/>)
   }
   
   render() {
+    console.log(this.props)
     return (
       <div>
         <h2>Stocks</h2>
@@ -23,12 +20,6 @@ class StockContainer extends React.Component {
   }
 }
 
-componentDidMount=()=>{
-  fetch('http://localhost:3000/stocks')
-  .then(res=>res.json())
-  .then(string=>{
-    this.setState(()=>({data:string}))
-  })
-}
+
 
 export default StockContainer;
