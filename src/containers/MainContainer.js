@@ -7,7 +7,7 @@ class MainContainer extends Component {
 
   state = {
     stocks: [],
-    
+    myStocks: []
   }
 
   componentDidMount() {
@@ -20,6 +20,14 @@ class MainContainer extends Component {
     })
   }
 
+  buyStock = (e, stockObj) => {
+    e.persist()
+    const newMyStocks = [stockObj, ...this.state.myStocks]
+    this.setState(() => ({
+      myStocks: newMyStocks
+    }))
+  }
+
   render() {
     return (
       <div>
@@ -28,12 +36,12 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer stocks={this.state.stocks}/>
+              <StockContainer stocks={this.state.stocks} buyStock={this.buyStock}/>
 
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer myStocks={this.state.myStocks}/>
 
             </div>
           </div>
