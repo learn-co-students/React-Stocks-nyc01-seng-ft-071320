@@ -1,32 +1,55 @@
 import React from 'react';
 
-const SearchBar = () => {
-  return (
-    <div>
+class SearchBar extends React.Component {
 
-      <strong>Sort by:</strong>
-      <label>
-        <input type="radio" value="Alphabetically" checked={null} onChange={null}/>
-        Alphabetically
-      </label>
-      <label>
-        <input type="radio" value="Price" checked={null} onChange={null}/>
-        Price
-      </label>
-      <br/>
+  state = {
+    selectedOption: ''
+  }
 
-      <label>
-        <strong>Filter:</strong>
-        <select onChange={null}>
-          <option value="Tech">Tech</option>
-          <option value="Sportswear">Sportswear</option>
-          <option value="Finance">Finance</option>
-        </select>
-      </label>
+  clickHandler = (event) => {
+    event.persist()
+    console.log(event.target.value)
+    this.setState(()=>({
+      selectedOption: event.target.value
+    }))
+  }
+
+  categorySort = (event) => {
+    // console.log(event.target.value)
+    this.props.sortCategory(event.target.value)
+  }
 
 
-    </div>
-  );
+
+  render(){
+    return (
+      <div>
+  
+        <strong>Sort by:</strong>
+        <label>
+          <input type="radio" value="Alphabetically" checked={this.state.selectedOption === "Alphabetically"} onChange={this.props.sortAlpha} onClick={this.clickHandler} />
+          Alphabetically
+        </label>
+        <label>
+          <input type="radio" value="Price" checked={this.state.selectedOption === "Price"} onChange={this.props.sortPrice} onClick={this.clickHandler} />
+          Price
+        </label>
+        <br/>
+  
+        <label>
+          <strong>Filter:</strong>
+          <select onChange={this.categorySort}>
+            <option value="Tech">Tech</option>
+            <option value="Sportswear">Sportswear</option>
+            <option value="Finance">Finance</option>
+          </select>
+        </label>
+  
+  
+      </div>
+    );
+
+  }
 }
 
 
