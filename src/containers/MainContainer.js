@@ -8,7 +8,8 @@ class MainContainer extends Component {
   state = {
     stocks: [],
     myStocks: [],
-    sortBy: ""
+    sortBy: "",
+    filterBy: "Tech"
   }
 
   componentDidMount() {
@@ -55,21 +56,27 @@ class MainContainer extends Component {
     }))
   }
 
+  getFilter = e => {
+    e.persist()
+    this.setState(() => ({
+      filterBy: e.target.value
+    }))
+  }
+
+  filterStocks = () => {
+    return this.state.stocks.filter(stock => stock.type === this.state.filterBy)
+  }
+
   render() {
     return (
       <div>
-        <SearchBar sortBy={this.state.sortBy} sortList={this.sortList}/>
-
+        <SearchBar sortBy={this.state.sortBy} sortList={this.sortList} getFilter={this.getFilter}/>
           <div className="row">
             <div className="col-8">
-
-              <StockContainer stocks={this.state.stocks} clickHandler={this.buyStock}/>
-
+              <StockContainer stocks={this.filterStocks()} clickHandler={this.buyStock}/>
             </div>
             <div className="col-4">
-
               <PortfolioContainer myStocks={this.state.myStocks} clickHandler={this.sellStock}/>
-
             </div>
           </div>
       </div>

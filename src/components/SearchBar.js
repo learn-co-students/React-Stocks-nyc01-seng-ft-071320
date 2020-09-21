@@ -4,7 +4,6 @@ const SearchBar = props => {
 
   return (
     <div>
-
       <strong>Sort by:</strong>
       <label>
         <input type="radio" value="Alphabetically" checked={props.sortBy === "Alphabetically" ? true : false} onChange={props.sortList}/>
@@ -18,7 +17,7 @@ const SearchBar = props => {
 
       <label>
         <strong>Filter:</strong>
-        <select onChange={null}>
+        <select onChange={props.getFilter}>
           <option value="Tech">Tech</option>
           <option value="Sportswear">Sportswear</option>
           <option value="Finance">Finance</option>
