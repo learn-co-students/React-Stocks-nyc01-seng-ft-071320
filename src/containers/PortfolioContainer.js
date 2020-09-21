@@ -4,7 +4,7 @@ import Stock from '../components/Stock'
 class PortfolioContainer extends Component {
 
   getMyStocks = () => {
-    return this.props.myStocks.map(stock => <Stock key={stock.id} stock={stock}/>)
+    return this.props.myStocks.map(stock => <Stock key={stock.id} stock={stock} clickHandler={this.props.clickHandler}/>)
   }
 
   render() {
