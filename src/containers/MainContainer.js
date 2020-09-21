@@ -5,7 +5,27 @@ import SearchBar from '../components/SearchBar'
 
 class MainContainer extends Component {
 
+  state = {
+    stocks: [],
+    favorites: []
+  }
+
+  appClickHandler =(obj) =>{
+    if(!this.state.favorites.includes(obj)){
+      console.log("this is James' hand", obj)
+      let newArray = [obj, ...this.state.favorites]
+      this.setState({ favorites: newArray})
+    }
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:3000/stocks")
+    .then(response => response.json())
+    .then(stocks => this.setState({stocks: stocks}))
+  }
+
   render() {
+    console.log(this.state.favorites)
     return (
       <div>
         <SearchBar/>
@@ -13,12 +33,12 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer/>
+              <StockContainer appClickHandler={this.appClickHandler} stocks={this.state.stocks}/>
 
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer favorites={this.state.favorites}/>
 
             </div>
           </div>
